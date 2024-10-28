@@ -1,16 +1,23 @@
 import React, { useState } from 'react';
+import { useUser } from '../contents/UserContext.tsx';
+import { useNavigate } from 'react-router-dom';
 
 const Register: React.FC = () => {
-    const [name, setName] = useState('');
-    const [email, setEmail] = useState('');
+    const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const [error, setError] = useState<string | null>(null);
+    const { register } = useUser();
+    const navigate = useNavigate();
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         // Handle registration logic here
-        console.log('Name:', name);
-        console.log('Email:', email);
-        console.log('Password:', password);
+        const success = await register(username, password);
+        if (success) {
+            navigate('/login');
+        } else {
+            setError('Registration failed');
+        }
     };
 
     return (
@@ -20,30 +27,18 @@ const Register: React.FC = () => {
                     <div className="card shadow-sm">
                         <div className="card-body">
                             <h4 className="card-title text-center mb-4">Register</h4>
+                            {error && <div className="alert alert-danger">{error}</div>} {/* Hiển thị lỗi */}
                             <form onSubmit={handleSubmit}>
                                 <div className="mb-3">
-                                    <label htmlFor="name" className="form-label">
-                                        <i className="bi bi-person-fill me-2"></i>Full Name
+                                    <label htmlFor="username" className="form-label">
+                                        <i className="bi bi-person-fill me-2"></i>Username
                                     </label>
                                     <input
                                         type="text"
                                         id="name"
                                         className="form-control"
-                                        value={name}
-                                        onChange={(e) => setName(e.target.value)}
-                                        required
-                                    />
-                                </div>
-                                <div className="mb-3">
-                                    <label htmlFor="email" className="form-label">
-                                        <i className="bi bi-envelope-fill me-2"></i>Email Address
-                                    </label>
-                                    <input
-                                        type="email"
-                                        id="email"
-                                        className="form-control"
-                                        value={email}
-                                        onChange={(e) => setEmail(e.target.value)}
+                                        value={username}
+                                        onChange={(e) => setUsername(e.target.value)}
                                         required
                                     />
                                 </div>

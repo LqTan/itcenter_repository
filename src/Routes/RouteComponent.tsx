@@ -36,7 +36,7 @@ const RouteComponent: React.FC = () => {
             {!hideHeaderFooter && <NavbarComponent />}
             <Routes>
                 <Route path="/" element={<HomePage />} />
-                <Route path="/course-detail" element={<CourseDetail />} />
+                <Route path="/course-detail/:id_course" element={<CourseDetail />} />
                 <Route path='/profile' element={<ProfileContainer />} />
                 <Route path='/payment' element={<Payment />} />
                 <Route path='/login' element={<Login />} />

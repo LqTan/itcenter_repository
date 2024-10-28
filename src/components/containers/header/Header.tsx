@@ -58,7 +58,7 @@ const Header: React.FC = () => {
                                     onClick={handleDropdownToggle}
                                 >
                                     <i className="bi bi-person"></i>
-                                    <span className="ms-2">{user.email}</span>
+                                    <span className="ms-2">{user.username}</span>
                                     <i className="bi bi-caret-down-fill ms-2"></i>
                                 </button>
                                 {showDropdown && (

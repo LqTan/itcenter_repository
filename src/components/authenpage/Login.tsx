@@ -4,19 +4,19 @@ import { useUser } from '../contents/UserContext.tsx';
 import { useNavigate } from 'react-router-dom';
 
 const Login: React.FC = () => {
-    const [email, setEmail] = useState('');
+    const [username, setUsername] = useState(''); // Sửa email thành username
     const [password, setPassword] = useState('');
     const [error, setError] = useState<string | null>(null);
     const { login } = useUser();
     const navigate = useNavigate();
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        const success = login(email, password); // Check login success
+        const success = await login(username, password); // Đổi email thành username
         if (success) {
-            navigate('/'); // Redirect to home page after login
+            navigate('/'); // Chuyển hướng đến trang chủ sau khi đăng nhập thành công
         } else {
-            setError('Invalid email or password'); // Set error message
+            setError('Invalid username or password'); // Thông báo lỗi
         }
     };
 
@@ -27,18 +27,18 @@ const Login: React.FC = () => {
                     <div className="card shadow-sm">
                         <div className="card-body">
                             <h4 className="card-title text-center mb-4">Login</h4>
-                            {error && <div className="alert alert-danger">{error}</div>} {/* Display error message */}
+                            {error && <div className="alert alert-danger">{error}</div>} {/* Hiển thị lỗi */}
                             <form onSubmit={handleSubmit}>
                                 <div className="mb-3">
-                                    <label htmlFor="email" className="form-label">
-                                        <i className="bi bi-envelope-fill me-2"></i>Email Address
+                                    <label htmlFor="username" className="form-label">
+                                        <i className="bi bi-person-fill me-2"></i>Username
                                     </label>
                                     <input
-                                        type="email"
-                                        id="email"
+                                        type="text"
+                                        id="username"
                                         className="form-control"
-                                        value={email}
-                                        onChange={(e) => setEmail(e.target.value)}
+                                        value={username} // Đổi email thành username
+                                        onChange={(e) => setUsername(e.target.value)}
                                         required
                                     />
                                 </div>
